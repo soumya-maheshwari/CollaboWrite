@@ -1,3 +1,5 @@
+/* home page */
+
 .home-container {
   display: flex;
   justify-content: center;
@@ -51,7 +53,7 @@
   font-weight: bold;
 }
 
-.submit-btn {
+.btn {
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -59,11 +61,14 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   padding: 12px;
-  background-color: #0d377d;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   -ms-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
+}
+
+.submit-btn {
+  background-color: #0d377d;
   color: white;
 }
 
@@ -79,4 +84,53 @@
     width: 100%;
     margin: 10px;
   }
+}
+
+/* editor page */
+
+.editor-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #222223;
+  padding: 29px;
+  height: auto;
+  color: white;
+  box-shadow: 10px 19px 10px rgba(246, 241, 241, 0.1);
+}
+
+.sidebar-top {
+  margin-bottom: 10px;
+}
+.collab-list {
+  margin: 10px 0;
+}
+
+.sidebar-bottom {
+  justify-content: space-between;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 30px;
+}
+
+.copy-btn {
+  background-color: #8d939d;
+}
+
+.leave-btn {
+  background-color: rgb(174, 105, 105);
+}
+
+.copy-btn:hover {
+  background-color: #bed1f3;
+}
+
+.leave-btn:hover {
+  background-color: rgb(245, 118, 118);
 }

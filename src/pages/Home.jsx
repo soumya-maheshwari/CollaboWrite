@@ -20,7 +20,7 @@ const Home = () => {
               <input type="text" className="input-field" />
             </div>
 
-            <button className="submit-btn">Submit</button>
+            <button className="submit-btn btn">Submit</button>
           </form>
         </div>
       </div>
