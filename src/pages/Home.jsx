@@ -21,6 +21,10 @@ const Home = () => {
             </div>
 
             <button className="submit-btn btn">Submit</button>
+            <p className="new-room-para">
+              Don't have a Room ID?{" "}
+              <span className="span-room">Create Room</span>
+            </p>
           </form>
         </div>
       </div>
