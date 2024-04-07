@@ -1,4 +1,5 @@
 import React from "react";
+import Editor from "../components/Editor";
 
 const CodeEditor = () => {
   return (
@@ -17,6 +18,9 @@ const CodeEditor = () => {
             <button className="btn copy-btn">Copy Room ID</button>
             <button className="btn leave-btn">Leave</button>
           </div>
+        </div>
+        <div className="code-editor-container">
+          <Editor />
         </div>
       </div>
     </>

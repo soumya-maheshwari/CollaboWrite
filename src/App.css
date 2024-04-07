@@ -100,7 +100,6 @@
   padding: 29px;
   height: auto;
   color: white;
-  box-shadow: 10px 19px 10px rgba(246, 241, 241, 0.1);
 }
 
 .sidebar-top {
@@ -133,4 +132,23 @@
 
 .leave-btn:hover {
   background-color: rgb(245, 118, 118);
+}
+
+.code-editor-container {
+  background: #151515;
+  width: 100vw;
+  height: 90vh;
+  flex: 1;
+  margin: auto;
+  padding: 10px;
+}
+
+#code-area {
+  background: #151515;
+  border: none;
+  color: white;
+  width: 100%;
+  resize: none;
+  height: 100%;
+  font-size: 14px;
 }
