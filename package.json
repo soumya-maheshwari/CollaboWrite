@@ -15,9 +15,12 @@
     "express": "^4.19.2",
     "http": "^0.0.1-security",
     "react": "^18.2.0",
+    "react-avatar": "^5.0.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

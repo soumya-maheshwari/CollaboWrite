@@ -1,29 +1,29 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+
 const app = express();
 const server = http.createServer(app);
 
 const io = new Server(server);
-
 const userSocketMap = {};
 
 function getAllConnectedClients(roomID) {
-  return Array.from(io.sockets.adapter.rooms.get(roomID) || []).map(
-    (socketId) => {
-      return {
-        socketId,
-        username: userSocketMap[username],
-      };
-    }
-  );
+  const room = io.sockets.adapter.rooms.get(roomID);
+  if (!room) return [];
+
+  return Array.from(room).map((socketId) => ({
+    socketId,
+    username: userSocketMap[socketId],
+  }));
 }
 
 io.on("connection", (socket) => {
-  console.log(socket, "socket");
+  console.log(`New connection: ${socket.id}`);
+
   socket.on("join", ({ roomID, username }) => {
-    console.log(roomID, "roomID");
-    console.log(username, "username");
+    console.log(`Joining room: ${roomID}`);
+    console.log(`Username: ${username}`);
 
     userSocketMap[socket.id] = username;
     socket.join(roomID);
@@ -40,33 +40,34 @@ io.on("connection", (socket) => {
   });
 
   socket.on("change_code", ({ roomId, code }) => {
-    socket.in(roomId).emit("change_code", {
-      code,
-    });
+    socket.in(roomId).emit("change_code", { code });
   });
 
   socket.on("sync_code", ({ socketId, code }) => {
-    console.log(code);
-    io.to(socketId).emit("change_code", {
-      code,
-    });
+    console.log(`Syncing code: ${code}`);
+    io.to(socketId).emit("change_code", { code });
   });
 
   socket.on("disconnecting", () => {
-    console.log(socket.rooms);
+    console.log(`Disconnecting: ${socket.id}`);
     const rooms = [...socket.rooms];
-    console.log(rooms);
     rooms.forEach((roomId) => {
-      console.log(roomId);
+      console.log(`Leaving room: ${roomId}`);
       socket.to(roomId).emit("disconnected", {
         socketId: socket.id,
         username: userSocketMap[socket.id],
       });
     });
     delete userSocketMap[socket.id];
-    socket.leave();
+    socket.leaveAll();
+  });
+
+  socket.on("error", (error) => {
+    console.error(`Socket error: ${error.message}`);
   });
 });
 
 const PORT = process.env.PORT || 9000;
-server.listen(PORT, () => console.log(`server listening at ${PORT}`));
+server.listen(PORT, () => {
+  console.log(`Server listening at port ${PORT}`);
+});

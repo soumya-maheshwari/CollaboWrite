@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import codeImg from "../assets/code.svg";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
   const [uuid, setuuid] = useState("");
   const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
+
+  const generateID = () => {
+    const id = uuidv4();
+    setuuid(id);
+    console.log(uuid, "uuid");
+  };
 
   useEffect(() => {
     if (!uuid) {
@@ -65,7 +72,9 @@ const Home = () => {
             <button className="submit-btn btn">Submit</button>
             <p className="new-room-para">
               Don't have a Room ID?{" "}
-              <span className="span-room">Create Room</span>
+              <span className="span-room" onClick={generateID}>
+                Create Room
+              </span>
             </p>
           </form>
         </div>

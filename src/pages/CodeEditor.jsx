@@ -1,7 +1,56 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Editor from "../components/Editor";
+import { initializeSocket } from "../socket";
+import { useLocation, useParams } from "react-router-dom";
 
 const CodeEditor = () => {
+  const [clients, setClients] = useState([]);
+  const socketRef = useRef(null);
+  const codeRef = useRef(null); // Use useRef instead of useState for codeRef
+  const location = useLocation();
+  const { roomId } = useParams();
+
+  useEffect(() => {
+    const init = async () => {
+      socketRef.current = await initializeSocket();
+
+      socketRef.current.on("connect_error", (err) => handleErrors(err));
+      socketRef.current.on("connect_failed", (err) => handleErrors(err));
+
+      function handleErrors(err) {
+        console.log("error", err);
+      }
+
+      socketRef.current.emit("join", {
+        roomId,
+        username: location.state?.username,
+      });
+
+      socketRef.current.on("joined", ({ clients, username, socketId }) => {
+        console.log(clients);
+        setClients(clients);
+        // Here you can update codeRef if necessary
+      });
+
+      socketRef.current.on("disconnected", ({ socketId, username }) => {
+        setClients((prev) => {
+          return prev.filter((client) => client.socketId !== socketId);
+        });
+      });
+    };
+    init();
+
+    // Clean up function
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current.off("joined");
+        socketRef.current.off("disconnected");
+      }
+    };
+  }, [roomId, location.state?.username]); // Make sure to include dependencies in the dependency array
+
+  console.log(clients); // Log clients here if you need to monitor its changes
   return (
     <>
       <div className="editor-container">
