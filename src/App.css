@@ -53,6 +53,12 @@
   font-weight: bold;
 }
 
+.error {
+  color: rgb(225, 124, 124);
+  margin-top: -19px;
+  display: none;
+  margin-bottom: 10px;
+}
 .btn {
   border: none;
   border-radius: 5px;
@@ -79,14 +85,14 @@
 .new-room-para {
   color: white;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .span-room {
   color: #ced9ea;
   text-decoration: underline;
   font-weight: 800;
-  font-size: 17px;
+  font-size: 19px;
   cursor: pointer;
 }
 
