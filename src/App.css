@@ -137,8 +137,8 @@
 .code-editor-container {
   background: #151515;
   width: 100vw;
-  height: 100vh;
-  margin: auto;
+  height: 94vh;
+  /* margin: auto; */
   padding: 10px;
 }
 

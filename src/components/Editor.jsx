@@ -29,6 +29,8 @@ const Editor = () => {
   }, []);
   return (
     <>
+      {/* React.StrictMode renders this screen two times */}
+
       <textarea id="code-area"></textarea>
     </>
   );
