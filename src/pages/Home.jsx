@@ -32,7 +32,11 @@ const Home = () => {
     if (!uuid || !username) {
       return;
     } else {
-      navigate(`/editor/${uuid}`);
+      navigate(`/editor/${uuid}`, {
+        state: {
+          username,
+        },
+      });
     }
   };
   return (

@@ -169,3 +169,30 @@
   /* padding-top: 20px; */
   height: 10px;
 }
+
+.user-badge {
+  display: flex;
+  flex-direction: column;
+}
+.circle {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.name {
+  width: 100px;
+  text-align: center;
+  margin-top: 10px;
+}

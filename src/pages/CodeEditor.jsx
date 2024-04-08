@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Editor from "../components/Editor";
 import { initializeSocket } from "../socket";
 import { useLocation, useParams } from "react-router-dom";
+import UserBadge from "../components/UserBadge";
 
 const CodeEditor = () => {
   const [clients, setClients] = useState([]);
@@ -10,6 +11,7 @@ const CodeEditor = () => {
   const location = useLocation();
   const { roomId } = useParams();
 
+  console.log(location);
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initializeSocket();
@@ -58,8 +60,9 @@ const CodeEditor = () => {
           <div className="sidebar-top">
             <h1>Collaborators</h1>
             <div className="collab-list">
-              <p>soumya</p>
-              <p>soumya</p>
+              {clients?.map((client) => (
+                <UserBadge key={client.socketId} username={client.username} />
+              ))}
             </div>
           </div>
 

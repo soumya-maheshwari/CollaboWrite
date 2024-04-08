@@ -1,10 +1,13 @@
 import React from "react";
-import Avatar from "react-avatar";
 
 const UserBadge = ({ username }) => {
+  const firstLetter = username?.charAt(0).toUpperCase();
+
   return (
     <div className="user-badge">
-      <Avatar name={username} size={60} />
+      <div className="circle">{firstLetter}</div>
+
+      <div className="name">{username}</div>
     </div>
   );
 };
