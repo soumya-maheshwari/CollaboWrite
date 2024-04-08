@@ -6,7 +6,7 @@ import "codemirror/mode/javascript/javascript";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
 
-const Editor = () => {
+const Editor = ({ socketRef, roomId, onCodeChange }) => {
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -24,9 +24,40 @@ const Editor = () => {
           lineNumbers: true,
         }
       );
+
+      editorRef.current.on("change", (instance, changes) => {
+        const { origin } = changes;
+        console.log(changes);
+
+        const code = instance.getValue();
+        onCodeChange(code);
+
+        console.log(code);
+        if (origin !== "setValue") {
+          socketRef.current.emit("sync_code", {
+            roomId,
+            code,
+          });
+        }
+      });
     }
+
     init();
   }, []);
+
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.on("change_code", ({ code }) => {
+        if (code !== null) {
+          editorRef.current.setValue(code);
+        }
+      });
+    }
+    return () => {
+      socketRef.current.off("change_code");
+    };
+  }, [socketRef.current]);
+
   return (
     <>
       {/* React.StrictMode renders this screen two times */}

@@ -72,7 +72,13 @@ const CodeEditor = () => {
           </div>
         </div>
         <div className="code-editor-container">
-          <Editor />
+          <Editor
+            socketRef={socketRef}
+            roomId={roomId}
+            onCodeChange={(code) => {
+              codeRef.current = code;
+            }}
+          />
         </div>
       </div>
     </>

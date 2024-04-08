@@ -44,6 +44,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sync_code", ({ socketId, code }) => {
+    console.log(socketId, "id");
     console.log(`Syncing code: ${code}`);
     io.to(socketId).emit("change_code", { code });
   });
