@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Editor from "../components/Editor";
 import { initializeSocket } from "../socket";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import UserBadge from "../components/UserBadge";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
@@ -11,6 +11,7 @@ const CodeEditor = () => {
   const codeRef = useRef(null);
   const location = useLocation();
   const { roomId } = useParams();
+  const navigate = useNavigate();
 
   console.log(location);
   useEffect(() => {
@@ -53,6 +54,9 @@ const CodeEditor = () => {
     };
   }, [roomId, location.state?.username]); // Make sure to include dependencies in the dependency array
 
+  const leaveRoom = () => {
+    navigate("/");
+  };
   console.log(clients);
 
   console.log(roomId, "room id");
@@ -73,7 +77,9 @@ const CodeEditor = () => {
             <CopyToClipboard text={roomId}>
               <button className="btn copy-btn">Copy Room ID</button>
             </CopyToClipboard>
-            <button className="btn leave-btn">Leave</button>
+            <button className="btn leave-btn" onClick={leaveRoom}>
+              Leave
+            </button>
           </div>
         </div>
         <div className="code-editor-container">
