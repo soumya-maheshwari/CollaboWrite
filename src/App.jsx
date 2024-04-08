@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/editor/:roomID" element={<CodeEditor />} />
+          <Route path="/editor/:roomId" element={<CodeEditor />} />
         </Routes>
       </BrowserRouter>
     </>

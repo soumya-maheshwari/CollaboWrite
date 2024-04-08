@@ -126,6 +126,8 @@
   margin-bottom: 10px;
 }
 .collab-list {
+  display: flex;
+  gap: 10px;
   margin: 10px 0;
 }
 
@@ -175,14 +177,14 @@
   flex-direction: column;
 }
 .circle {
-  width: 100px;
-  height: 100px;
-  background-color: blue;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(115, 115, 235);
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   border-radius: 50%;
   -webkit-border-radius: 50%;
@@ -192,7 +194,7 @@
 }
 
 .name {
-  width: 100px;
+  width: 40px;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 6px;
 }

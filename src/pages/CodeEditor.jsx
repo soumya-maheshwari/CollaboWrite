@@ -3,11 +3,12 @@ import Editor from "../components/Editor";
 import { initializeSocket } from "../socket";
 import { useLocation, useParams } from "react-router-dom";
 import UserBadge from "../components/UserBadge";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const CodeEditor = () => {
   const [clients, setClients] = useState([]);
   const socketRef = useRef(null);
-  const codeRef = useRef(null); // Use useRef instead of useState for codeRef
+  const codeRef = useRef(null);
   const location = useLocation();
   const { roomId } = useParams();
 
@@ -52,7 +53,9 @@ const CodeEditor = () => {
     };
   }, [roomId, location.state?.username]); // Make sure to include dependencies in the dependency array
 
-  console.log(clients); // Log clients here if you need to monitor its changes
+  console.log(clients);
+
+  console.log(roomId, "room id");
   return (
     <>
       <div className="editor-container">
@@ -67,7 +70,9 @@ const CodeEditor = () => {
           </div>
 
           <div className="sidebar-bottom">
-            <button className="btn copy-btn">Copy Room ID</button>
+            <CopyToClipboard text={roomId}>
+              <button className="btn copy-btn">Copy Room ID</button>
+            </CopyToClipboard>
             <button className="btn leave-btn">Leave</button>
           </div>
         </div>
