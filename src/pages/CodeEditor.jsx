@@ -13,6 +13,8 @@ const CodeEditor = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
 
+  console.log(roomId);
+
   console.log(location);
   useEffect(() => {
     const init = async () => {
@@ -26,7 +28,7 @@ const CodeEditor = () => {
       }
 
       socketRef.current.emit("join", {
-        roomId,
+        roomId: roomId,
         username: location.state?.username,
       });
 
