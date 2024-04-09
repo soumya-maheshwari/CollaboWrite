@@ -37,7 +37,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
 
         console.log(code);
         if (origin !== "setValue") {
-          socketRef.current.emit(ACTIONS.SYNC_CODE, {
+          socketRef.current.emit(ACTIONS.CODE_CHANGE, {
             roomId,
             code,
           });

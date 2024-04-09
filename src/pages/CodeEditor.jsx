@@ -42,6 +42,9 @@ const CodeEditor = () => {
           setClients(clients);
           // Here you can update codeRef if necessary
 
+          if (username !== location.state?.username) {
+            toast.success(`${username}  joined the room`);
+          }
           socketRef.current.emit(ACTIONS.SYNC_CODE, {
             code: codeRef.current,
             socketId,
@@ -52,6 +55,7 @@ const CodeEditor = () => {
       socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
         console.log(socketId);
         console.log(username);
+        toast.success(`${username} has left the room`);
         setClients((prev) => {
           return prev.filter((client) => client.socketId !== socketId);
         });
