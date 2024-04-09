@@ -117,7 +117,7 @@
   width: 250px;
   height: 100vh;
   background-color: #222223;
-  padding: 29px;
+  padding: 20px;
   height: auto;
   color: white;
 }
@@ -136,15 +136,20 @@
   gap: 20px;
   display: flex;
   flex-direction: column;
-  position: absolute;
+  /* position: absolute; */
   bottom: 30px;
+  margin-left: auto;
 }
 
 .copy-btn {
+  width: 10rem;
   background-color: #8d939d;
+  margin: auto;
 }
 
 .leave-btn {
+  margin: auto;
+  width: 10rem;
   background-color: rgb(174, 105, 105);
 }
 
