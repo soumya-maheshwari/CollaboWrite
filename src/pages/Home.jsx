@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import codeImg from "../assets/code.svg";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-hot-toast";
 
 const Home = () => {
   const [uuid, setuuid] = useState("");
@@ -13,6 +14,7 @@ const Home = () => {
     const id = uuidv4();
     setuuid(id);
     console.log(uuid, "uuid");
+    toast.success("Room ID created");
   };
 
   useEffect(() => {

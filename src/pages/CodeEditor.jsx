@@ -4,6 +4,7 @@ import { initializeSocket } from "../socket";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import UserBadge from "../components/UserBadge";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { toast } from "react-hot-toast";
 
 const CodeEditor = () => {
   const [clients, setClients] = useState([]);
@@ -57,7 +58,16 @@ const CodeEditor = () => {
   }, [roomId, location.state?.username]); // Make sure to include dependencies in the dependency array
 
   const leaveRoom = () => {
+    toast.loading("Leaving room");
+    setTimeout(() => {
+      navigate("/");
+      toast.dismiss();
+    }, 1000);
     navigate("/");
+  };
+
+  const handleSuccess = () => {
+    toast.success("Room ID copied");
   };
   console.log(clients);
 
@@ -76,7 +86,7 @@ const CodeEditor = () => {
           </div>
 
           <div className="sidebar-bottom">
-            <CopyToClipboard text={roomId}>
+            <CopyToClipboard text={roomId} onCopy={handleSuccess}>
               <button className="btn copy-btn">Copy Room ID</button>
             </CopyToClipboard>
             <button className="btn leave-btn" onClick={leaveRoom}>
