@@ -5,6 +5,7 @@ import "codemirror/theme/dracula.css";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
+import ACTIONS from "../Actions";
 
 const Editor = ({ socketRef, roomId, onCodeChange }) => {
   const editorRef = useRef(null);
@@ -36,7 +37,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
 
         console.log(code);
         if (origin !== "setValue") {
-          socketRef.current.emit("sync_code", {
+          socketRef.current.emit(ACTIONS.SYNC_CODE, {
             roomId,
             code,
           });
@@ -49,14 +50,14 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
 
   useEffect(() => {
     if (socketRef.current) {
-      socketRef.current.on("change_code", ({ code }) => {
+      socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
         if (code !== null) {
           editorRef.current.setValue(code);
         }
       });
     }
     return () => {
-      socketRef.current.off("change_code");
+      socketRef.current.off(ACTIONS.CODE_CHANGE);
     };
   }, [socketRef.current]);
 

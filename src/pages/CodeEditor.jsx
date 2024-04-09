@@ -5,6 +5,7 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import UserBadge from "../components/UserBadge";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-hot-toast";
+import ACTIONS from "../Actions";
 
 const CodeEditor = () => {
   const [clients, setClients] = useState([]);
@@ -20,7 +21,7 @@ const CodeEditor = () => {
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initializeSocket();
-
+      console.log(socketRef);
       socketRef.current.on("connect_error", (err) => handleErrors(err));
       socketRef.current.on("connect_failed", (err) => handleErrors(err));
 
@@ -28,18 +29,29 @@ const CodeEditor = () => {
         console.log("error", err);
       }
 
-      socketRef.current.emit("join", {
+      socketRef.current.emit(ACTIONS.JOIN, {
         roomId: roomId,
         username: location.state?.username,
       });
 
-      socketRef.current.on("joined", ({ clients, username, socketId }) => {
-        console.log(clients);
-        setClients(clients);
-        // Here you can update codeRef if necessary
-      });
+      socketRef.current.on(
+        ACTIONS.JOINED,
+        ({ clients, username, socketId }) => {
+          console.log(clients);
+          console.log(socketId, "socket id");
+          setClients(clients);
+          // Here you can update codeRef if necessary
 
-      socketRef.current.on("disconnected", ({ socketId, username }) => {
+          socketRef.current.emit(ACTIONS.SYNC_CODE, {
+            code: codeRef.current,
+            socketId,
+          });
+        }
+      );
+
+      socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
+        console.log(socketId);
+        console.log(username);
         setClients((prev) => {
           return prev.filter((client) => client.socketId !== socketId);
         });
@@ -51,8 +63,8 @@ const CodeEditor = () => {
     return () => {
       if (socketRef.current) {
         socketRef.current.disconnect();
-        socketRef.current.off("joined");
-        socketRef.current.off("disconnected");
+        socketRef.current.off(ACTIONS.JOINED);
+        socketRef.current.off(ACTIONS.DISCONNECTED);
       }
     };
   }, [roomId, location.state?.username]); // Make sure to include dependencies in the dependency array
