@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import ACTIONS from "./src/Actions.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -21,17 +22,17 @@ function getAllConnectedClients(roomID) {
 io.on("connection", (socket) => {
   console.log(`New connection: ${socket.id}`);
 
-  socket.on("join", ({ roomID, username }) => {
-    console.log(`Joining room: ${roomID}`);
+  socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
+    console.log(`Joining room: ${roomId}`);
     console.log(`Username: ${username}`);
 
     userSocketMap[socket.id] = username;
-    socket.join(roomID);
+    socket.join(roomId);
 
-    const clients = getAllConnectedClients(roomID);
-
+    const clients = getAllConnectedClients(roomId);
+    console.log(clients, "clients");
     clients.forEach(({ socketId }) => {
-      io.to(socketId).emit("joined", {
+      io.to(socketId).emit(ACTIONS.JOINED, {
         clients,
         username,
         socketId: socket.id,
@@ -39,14 +40,14 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("change_code", ({ roomId, code }) => {
-    socket.in(roomId).emit("change_code", { code });
+  socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
+    socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
   });
 
-  socket.on("sync_code", ({ socketId, code }) => {
+  socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
     console.log(socketId, "id");
     console.log(`Syncing code: ${code}`);
-    io.to(socketId).emit("change_code", { code });
+    io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
   });
 
   socket.on("disconnecting", () => {
@@ -54,11 +55,13 @@ io.on("connection", (socket) => {
     const rooms = [...socket.rooms];
     rooms.forEach((roomId) => {
       console.log(`Leaving room: ${roomId}`);
-      socket.to(roomId).emit("disconnected", {
+      socket.to(roomId).emit(ACTIONS.DISCONNECTED, {
         socketId: socket.id,
         username: userSocketMap[socket.id],
       });
     });
+
+    console.log(userSocketMap, "map");
     delete userSocketMap[socket.id];
     socket.leaveAll();
   });

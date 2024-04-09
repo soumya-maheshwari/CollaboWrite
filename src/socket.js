@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export const initializeSocket = async () => {
-  console.log(backendUrl);
+  // console.log(backendUrl);
   if (!backendUrl) {
     throw new Error("Backend URL is not defined.");
   }
@@ -16,6 +16,7 @@ export const initializeSocket = async () => {
 
   try {
     const socket = io(backendUrl, options);
+    console.log(socket);
     return socket;
   } catch (error) {
     console.error("Socket connection error:", error);
