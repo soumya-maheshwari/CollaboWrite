@@ -41,6 +41,7 @@ const Home = () => {
       });
     }
   };
+
   return (
     <>
       <div className="home-container">
@@ -84,6 +85,29 @@ const Home = () => {
             </p>
           </form>
         </div>
+      </div>
+      <div
+        style={{
+          color: "white",
+          fontSize: "20px",
+          fontWeight: "500",
+          textAlign: "center",
+          marginTop: "-40px",
+        }}
+      >
+        Built by{" "}
+        <a
+          style={{
+            fontSize: "23px",
+            fontWeight: "800",
+            cursor: "pointer",
+            textDecoration: "none",
+            color: "whitesmoke",
+          }}
+          href="https://github.com/soumya-maheshwari"
+        >
+          Soumya Maheshwari
+        </a>
       </div>
     </>
   );
